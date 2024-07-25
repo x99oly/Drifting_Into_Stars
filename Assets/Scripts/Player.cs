@@ -1,35 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //Definidas na Unity
+    public float velocidade = 10.0f, cadenciaDeDisparos = 10.0f, stamina = 100.0f, dash = 20.0f;
+    public GameObject projetil, arma;
 
-    public float velocidade = 10.0f;
-
-    public GameObject pivot;
-
-    int seg = 300;
-    int s;
+    //Definidas em código
+    float intervalo, energia;
+    bool podeMovimentar = true;
 
 
-
-    void Start()
+    //Girar personagem
+    Rigidbody jogadorRB;
+    float cameraRayLength = 100f;
+    void Awake()
     {
-    }
+        energia = stamina;
+        intervalo = cadenciaDeDisparos;
 
-    // Update is called once per frame
+        jogadorRB = GetComponent<Rigidbody>();
+    }
     void Update()
-    {
-         
-    }
+    {    
 
+    }
     private void FixedUpdate()
     {
-        RotacionarPersonagem();
+        GameManager.ManterNaTela(gameObject);
 
-        ManterJogadorNaTela();
-        MovimentarPersonagem();
+        if (podeMovimentar) MovimentarPersonagem();
+        DashPersonagem();
+        RotacionarPersonagem();
+        
+
+        float tiro = Input.GetAxis("Fire1");
+        intervalo--;
+        if(tiro > 0 && intervalo <= 0)
+        {
+            GameManager.Atirar(arma, projetil);
+            intervalo = cadenciaDeDisparos;
+        }
 
     }
     void MovimentarPersonagem()
@@ -37,45 +52,61 @@ public class Player : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        Vector3 movimento = new Vector3(moveX*-1, moveY,0.0f) * velocidade;
+        Vector3 movimento = new Vector3(moveX*-1, moveY) * velocidade;
 
         transform.Translate(movimento * Time.deltaTime);
     }
 
-    void RotacionarPersonagem()
+    void DashPersonagem()
     {
-        // Obtém a posição do mouse no mundo
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float novaPos = 0f;
 
-        // Calcula a diferença entre a posição do pivot e a posição do mouse
-        Vector3 diff = mousePosition - pivot.transform.position;
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            novaPos = dash;
+            if (energia >= (stamina / 2)) Dash(novaPos);
+        }
+        else if (Input.GetKeyUp(KeyCode.E))
+        {
+            novaPos = dash * -1;
+            if (energia >= (stamina / 2)) Dash(novaPos);
+        }
+    }
+    
+    void Dash(float novaPos)
+    {
+        podeMovimentar = false;
+        Vector3 posicaoAtual = transform.position;
+        transform.position = new Vector3(posicaoAtual.x + novaPos, 0f, posicaoAtual.z);
+        energia -= stamina / 2;
+        if (energia < 0) energia = 0;
+        podeMovimentar = true;
 
-        // Normaliza o vetor de diferença para obter a direção
-        diff.Normalize();
-
-        // Calcula o ângulo de rotação em graus
-        float rotationZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-
-        // Aplica a rotação ao pivot
-        pivot.transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
+        Debug.Log(energia);
     }
 
-    void ManterJogadorNaTela()
+    void RotacionarPersonagem()
     {
-        Vector3 posicaoDoJogador = transform.position;
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
 
-        Vector3 posicaoDoJogadorNaTela = Camera.main.WorldToViewportPoint(transform.position);
-
-        if(posicaoDoJogadorNaTela.x < 0 || posicaoDoJogadorNaTela.x > 1)
+        if (Physics.Raycast(cameraRay, out hitInfo, cameraRayLength))
         {
-            posicaoDoJogador.x = -posicaoDoJogador.x;
-        }
-        if(posicaoDoJogadorNaTela.y < 0 || posicaoDoJogadorNaTela.y > 1)
-        {
-            posicaoDoJogador.y = -posicaoDoJogador.y;
-        }
+            // Verifica se o objeto atingido está na camada do jogador
+            if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                return;
+            }
 
-        transform.position = posicaoDoJogador;
+            Vector3 playerToMouse = hitInfo.point - transform.position;
+            playerToMouse.z = 0;
+
+            // Calcula o ângulo de rotação necessário para que o lado do personagem siga o mouse
+            float angulo = Mathf.Atan2(playerToMouse.y, playerToMouse.x) * Mathf.Rad2Deg - 90f;  // Subtrai 90 graus para alinhar a frente com mouse
+
+            Quaternion novaRotacao = Quaternion.Euler(new Vector3(0, 0, angulo));
+            jogadorRB.MoveRotation(novaRotacao);
+        }
     }
 
 }
