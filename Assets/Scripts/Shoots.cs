@@ -16,5 +16,18 @@ public class Shoots : MonoBehaviour
         GameManager.DestruirAoSairDaTela(gameObject);
     }
 
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DestruirAoColidir(other.gameObject);
+    }
+
+    void DestruirAoColidir(GameObject other)
+    {
+        if (!other.CompareTag("Bullet")) Destroy(gameObject);
+    }
+
 }

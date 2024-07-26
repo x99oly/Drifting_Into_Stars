@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6216969337395151010}
   - component: {fileID: -5706641601480068005}
   m_Layer: 8
-  m_Name: Bala
+  m_Name: Bala Inimiga
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e914272373698a54eaca3b29438d1442, type: 2}
+  - {fileID: 2100000, guid: f577567e014a0c04ba994e65159130bc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     {
         Vector3 posicaoDoPersonagem = personagem.transform.position;
         Vector3 posicaoDoPersonagemNaTela = Camera.main.WorldToViewportPoint(posicaoDoPersonagem);
+        if (posicaoDoPersonagem.z != 1)
+        {
+            posicaoDoPersonagem.z = 1;
+        }
 
         if (posicaoDoPersonagemNaTela.x < 0)
         {

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //Definidas na Unity
-    public float velocidade = 10.0f, cadenciaDeDisparos = 10.0f, stamina = 100.0f, tempoDoDash = 0.5f, velocidaDoDash = 3;
+    public float vida = 100f, stamina = 100.0f, velocidade = 10.0f, cadenciaDeDisparos = 10.0f,  tempoDoDash = 0.5f, velocidaDoDash = 3;
     public GameObject projetil, arma;
 
     //Definidas em código
