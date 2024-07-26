@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     {
         if (intervalo > 0) return;
 
-        GameManager.Atirar(arma, projetil);
+        GameManager.Atirar(gameObject, arma, projetil);
         intervalo = cadenciaDeDisparos;
     }
     void MovimentarPersonagem()

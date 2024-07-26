@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shoots : MonoBehaviour
 {
+    public float dano = 5.0f;
+    public float TiroEnvenenado = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +15,7 @@ public class Shoots : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameManager.DestruirAoSairDaTela(gameObject);
+      GameManager.DestruirAoSairDaTela(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)

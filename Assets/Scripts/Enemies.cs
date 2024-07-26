@@ -33,6 +33,7 @@ public abstract class Enemys : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         VirarParaJogador();
+        Mover();
 
         intervalo -= Time.deltaTime;
         if(intervalo < 0)
@@ -42,11 +43,20 @@ public abstract class Enemys : MonoBehaviour
         }
     }
 
-    
+    protected virtual void Mover()
+    {
+
+        float moveX = 1f;
+        float moveY = 0f;
+
+        Vector3 movimento = new Vector3(moveX * -1, moveY) * velocidade;
+
+        transform.Translate(movimento * Time.deltaTime);
+    }
 
     protected virtual void Atirar()
     {
-        GameManager.Atirar(arma, projetil);
+        GameManager.Atirar(gameObject, arma, projetil);
     }
 
     protected void VirarParaJogador()

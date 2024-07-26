@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 135911216}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Arma
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 315877487}
   - component: {fileID: 315877489}
   - component: {fileID: 315877488}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Corpo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315877486}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.057392195, y: -0.007787811, z: -0.0017322876, w: 0.9983199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0009204769, y: -0.072572954, z: 0.9889821}
   m_LocalScale: {x: 4.0582, y: 4.0582, z: 4.0582}
   m_ConstrainProportionsScale: 0
@@ -700,7 +700,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5fc0779a572a586408ef312d638fc9bb, type: 2}
+  - {fileID: 2100000, guid: d66e76b8cebd8e5488404e2dfc630a94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -756,7 +756,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181521679}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.057392195, y: -0.007787811, z: -0.0017322876, w: 0.9983199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0009204769, y: -0.072572954, z: 0.9889821}
   m_LocalScale: {x: 4.0582, y: 4.0582, z: 4.0582}
   m_ConstrainProportionsScale: 0
@@ -828,7 +828,7 @@ GameObject:
   - component: {fileID: 1421208953}
   - component: {fileID: 1421208955}
   - component: {fileID: 1421208954}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Bico
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 1605837469}
   - component: {fileID: 1605837471}
   - component: {fileID: 1605837470}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Asa Dir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   stamina: 100
   velocidade: 50
   cadenciaDeDisparos: 10
-  tempoDoDash: 0.5
+  tempoDoDash: 0.1
   velocidaDoDash: 3
   projetil: {fileID: 1453401109236635874, guid: bfcdf6e55c874494a90a3b93d9362402, type: 3}
   arma: {fileID: 1681829748}
@@ -1172,7 +1172,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -1190,13 +1190,13 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 255
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 6.68, y: 5.73, z: 1}
@@ -1268,10 +1268,10 @@ GameObject:
   - component: {fileID: 1956027247}
   - component: {fileID: 1956027246}
   - component: {fileID: 1956027245}
-  - component: {fileID: 1956027244}
-  m_Layer: 3
+  - component: {fileID: 1956027248}
+  m_Layer: 7
   m_Name: Inimigo1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1284,7 +1284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956027242}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.069400325, y: -0, z: -0, w: 0.99758893}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 20.7, y: 0.062222004, z: 0.6256466}
   m_LocalScale: {x: 0.4098327, y: 0.4098327, z: 0.4098327}
   m_ConstrainProportionsScale: 0
@@ -1292,27 +1292,6 @@ Transform:
   - {fileID: 315877487}
   m_Father: {fileID: 2118743546}
   m_LocalEulerAnglesHint: {x: -7.959, y: 0, z: 0}
---- !u!114 &1956027244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956027242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88dd69dcb942bbe4f9848faff8e3c864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vida: 100
-  velocidade: 10
-  cadenciaDeDisparos: 1
-  projetil: {fileID: 1453401109236635874, guid: bfcdf6e55c874494a90a3b93d9362402, type: 3}
-  arma: {fileID: 135911215}
-  inimigoRB: {fileID: 0}
-  intervalo: 0
-  podeMovimentar: 1
-  tiro: 0
 --- !u!64 &1956027245
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1329,7 +1308,7 @@ MeshCollider:
     m_Bits: 64
   m_LayerOverridePriority: 1
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
@@ -1345,17 +1324,17 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 503
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.68, y: 5.73, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 6.68, y: 5.73, z: 5.32}
+  m_Center: {x: 0, y: 0.5, z: 1.04}
 --- !u!54 &1956027247
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1375,7 +1354,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -1383,6 +1362,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1956027248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956027242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16c94e783d44b446a5cebaf685f339b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 30
+  velocidade: 10
+  danoDoDisparo: 5
+  cadenciaDeDisparos: 1
+  projetil: {fileID: 1453401109236635874, guid: 07af3d8210b69bc498f8affa13cf65cb, type: 3}
+  arma: {fileID: 135911215}
+  jogador: {fileID: 1771541846}
 --- !u!1 &1992371872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,7 +1392,7 @@ GameObject:
   - component: {fileID: 1992371873}
   - component: {fileID: 1992371875}
   - component: {fileID: 1992371874}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Asa Esq
   m_TagString: Untagged
   m_Icon: {fileID: 0}
