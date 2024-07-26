@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     //Definidas em código
     float intervalo, energia;
     bool podeMovimentar = true;
+    float tiro;
 
 
     //Girar personagem
@@ -31,21 +32,24 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        GameManager.ManterNaTela(gameObject);
+        tiro = Input.GetAxis("Fire1");
+        intervalo--;
+
+        RotacionarPersonagem();
 
         if (podeMovimentar) MovimentarPersonagem();
-        DashPersonagem();
-        RotacionarPersonagem();
-        
+        if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E)) DashPersonagem();
+        if (tiro > 0) Disparar();
 
-        float tiro = Input.GetAxis("Fire1");
-        intervalo--;
-        if(tiro > 0 && intervalo <= 0)
-        {
-            GameManager.Atirar(arma, projetil);
-            intervalo = cadenciaDeDisparos;
-        }
+        GameManager.ManterNaTela(gameObject);
+    }
 
+    void Disparar()
+    {
+        if (intervalo > 0) return;
+
+        GameManager.Atirar(arma, projetil);
+        intervalo = cadenciaDeDisparos;
     }
     void MovimentarPersonagem()
     {
