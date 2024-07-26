@@ -7,7 +7,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //Definidas na Unity
-    public float velocidade = 10.0f, cadenciaDeDisparos = 10.0f, stamina = 100.0f, dash = 20.0f;
+    public float velocidade = 10.0f, cadenciaDeDisparos = 10.0f, stamina = 100.0f, tempoDoDash = 0.5f, velocidaDoDash = 3;
     public GameObject projetil, arma;
 
     //Definidas em código
@@ -27,20 +27,25 @@ public class Player : MonoBehaviour
         jogadorRB = GetComponent<Rigidbody>();
     }
     void Update()
-    {    
+    {
 
     }
     private void FixedUpdate()
     {
+        // Vars
         tiro = Input.GetAxis("Fire1");
         intervalo--;
 
+        // Execuções constantes
         RotacionarPersonagem();
 
-        if (podeMovimentar) MovimentarPersonagem();
-        if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E)) DashPersonagem();
+        // Execuções Condicionais
+        if (podeMovimentar) MovimentarPersonagem(); //Dash impede movimento
+        if (Input.GetKeyUp(KeyCode.Q) && energia >= (stamina / 2)) StartCoroutine(Dash(-1));
+        if (Input.GetKeyUp(KeyCode.E) && energia >= (stamina / 2)) StartCoroutine(Dash(1));
         if (tiro > 0) Disparar();
 
+        // Execuções de códigos externos
         GameManager.ManterNaTela(gameObject);
     }
 
@@ -56,37 +61,28 @@ public class Player : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        Vector3 movimento = new Vector3(moveX*-1, moveY) * velocidade;
+        Vector3 movimento = new Vector3(moveX * -1, moveY) * velocidade;
 
         transform.Translate(movimento * Time.deltaTime);
     }
 
-    void DashPersonagem()
-    {
-        float novaPos = 0f;
-
-        if (Input.GetKeyUp(KeyCode.Q))
-        {
-            novaPos = dash;
-            if (energia >= (stamina / 2)) Dash(novaPos);
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            novaPos = dash * -1;
-            if (energia >= (stamina / 2)) Dash(novaPos);
-        }
-    }
-    
-    void Dash(float novaPos)
+    IEnumerator Dash(int direcao)
     {
         podeMovimentar = false;
-        Vector3 posicaoAtual = transform.position;
-        transform.position = new Vector3(posicaoAtual.x + novaPos, 0f, posicaoAtual.z);
-        energia -= stamina / 2;
-        if (energia < 0) energia = 0;
-        podeMovimentar = true;
 
-        Debug.Log(energia);
+        jogadorRB.velocity = transform.right * (velocidade * velocidaDoDash * direcao);
+        yield return new WaitForSeconds(tempoDoDash);
+
+        jogadorRB.velocity = Vector3.zero;
+
+        energia -= stamina / 2; if (energia < 0) energia = 0;
+        podeMovimentar = true;
+    }
+
+    float ContagemRegressiva(float tempo)
+    {
+        if (tempo == 1) return 0;
+        return ContagemRegressiva(tempo - 1);
     }
 
     void RotacionarPersonagem()
