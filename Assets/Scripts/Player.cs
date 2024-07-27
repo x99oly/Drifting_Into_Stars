@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     //Definidas na Unity
     public float vida = 100f, stamina = 100.0f, velocidade = 10.0f, cadenciaDeDisparos = 10.0f,  tempoDoDash = 0.5f, velocidaDoDash = 3;
     public GameObject projetil, arma;
+    public Rigidbody armaRB;
+
 
     //Definidas em código
     float intervalo, energia;
@@ -90,6 +92,7 @@ public class Player : MonoBehaviour
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
+
         if (Physics.Raycast(cameraRay, out hitInfo, cameraRayLength))
         {
             // Verifica se o objeto atingido está na camada do jogador
@@ -105,7 +108,7 @@ public class Player : MonoBehaviour
             float angulo = Mathf.Atan2(playerToMouse.y, playerToMouse.x) * Mathf.Rad2Deg - 90f;  // Subtrai 90 graus para alinhar a frente com mouse
 
             Quaternion novaRotacao = Quaternion.Euler(new Vector3(0, 0, angulo));
-            jogadorRB.MoveRotation(novaRotacao);
+            armaRB.MoveRotation(novaRotacao);
         }
     }
 

@@ -211,7 +211,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f577567e014a0c04ba994e65159130bc, type: 2}
+  - {fileID: 2100000, guid: acd155b41d386ba48a22505827ba569a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: 981661002}
   m_Layer: 6
   m_Name: Chao
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -870,7 +870,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f577567e014a0c04ba994e65159130bc, type: 2}
+  - {fileID: 2100000, guid: acd155b41d386ba48a22505827ba569a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -953,7 +953,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f577567e014a0c04ba994e65159130bc, type: 2}
+  - {fileID: 2100000, guid: acd155b41d386ba48a22505827ba569a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1125,8 +1125,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771541846}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.069400325, y: -0, z: -0, w: 0.99758893}
-  m_LocalPosition: {x: 0.010280997, y: 0.062222004, z: 0.6256466}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.54, y: 0.062222004, z: 0}
   m_LocalScale: {x: 0.4098327, y: 0.4098327, z: 0.4098327}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1151,7 +1151,7 @@ MonoBehaviour:
   cadenciaDeDisparos: 10
   tempoDoDash: 0.1
   velocidaDoDash: 3
-  projetil: {fileID: 1453401109236635874, guid: bfcdf6e55c874494a90a3b93d9362402, type: 3}
+  projetil: {fileID: 5901243694698969318, guid: 603c092133a634d41977223fe8262aea, type: 3}
   arma: {fileID: 1681829748}
 --- !u!54 &1771541849
 Rigidbody:
@@ -1190,17 +1190,17 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 383
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 255
-  m_LayerOverridePriority: 0
+    m_Bits: 128
+  m_LayerOverridePriority: 5
   m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.68, y: 5.73, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 6.68, y: 5.73, z: 5.48}
+  m_Center: {x: 0, y: 0.5, z: 0.91}
 --- !u!64 &1771541851
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1285,7 +1285,7 @@ Transform:
   m_GameObject: {fileID: 1956027242}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.7, y: 0.062222004, z: 0.6256466}
+  m_LocalPosition: {x: 20.7, y: 0.062222004, z: 0}
   m_LocalScale: {x: 0.4098327, y: 0.4098327, z: 0.4098327}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1378,7 +1378,7 @@ MonoBehaviour:
   velocidade: 10
   danoDoDisparo: 5
   cadenciaDeDisparos: 1
-  projetil: {fileID: 1453401109236635874, guid: 07af3d8210b69bc498f8affa13cf65cb, type: 3}
+  projetil: {fileID: 5901243694698969318, guid: 603c092133a634d41977223fe8262aea, type: 3}
   arma: {fileID: 135911215}
   jogador: {fileID: 1771541846}
 --- !u!1 &1992371872
@@ -1434,7 +1434,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f577567e014a0c04ba994e65159130bc, type: 2}
+  - {fileID: 2100000, guid: acd155b41d386ba48a22505827ba569a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

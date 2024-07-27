@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public float danoBaseDosTiros = 5f;
     void Start()
     {
         
