@@ -73,5 +73,9 @@ public abstract class Enemys : MonoBehaviour
         inimigoRB.MoveRotation(novaRotacao);
     }
 
+    public void DroparInimigo()
+    {
+
+    }
     
 }

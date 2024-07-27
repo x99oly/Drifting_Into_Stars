@@ -12,7 +12,5 @@ public class Ene_Basic : Enemys
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        
     }
 }

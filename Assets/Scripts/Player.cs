@@ -7,19 +7,21 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //Definidas na Unity
-    public float vida = 100f, stamina = 100.0f, velocidade = 10.0f, cadenciaDeDisparos = 10.0f,  tempoDoDash = 0.5f, velocidaDoDash = 3;
+    public float vida = 100f, stamina = 100.0f, velocidade = 10.0f, cadenciaDeDisparos = 10.0f, tempoDoDash = 0.5f, velocidaDoDash = 3;
     public GameObject projetil, arma;
     public Rigidbody armaRB;
 
 
+
     //Definidas em código
     float intervalo, energia;
-    bool podeMovimentar = true;
+    bool podeMovimentar = true, podeGirar = true;
     float tiro;
 
 
     //Girar personagem
     Rigidbody jogadorRB;
+
     float cameraRayLength = 100f;
     void Awake()
     {
@@ -39,12 +41,11 @@ public class Player : MonoBehaviour
         intervalo--;
 
         // Execuções constantes
-        RotacionarPersonagem();
 
         // Execuções Condicionais
-        if (podeMovimentar) MovimentarPersonagem(); //Dash impede movimento
-        if (Input.GetKeyUp(KeyCode.Q) && energia >= (stamina / 2)) StartCoroutine(Dash(-1));
-        if (Input.GetKeyUp(KeyCode.E) && energia >= (stamina / 2)) StartCoroutine(Dash(1));
+        if (podeMovimentar) MovimentarPersonagem();
+        if (podeGirar) RotacionarPersonagem();
+        if (Input.GetKeyUp(KeyCode.Space) && energia >= (stamina / 2)) StartCoroutine(Dash());
         if (tiro > 0) Disparar();
 
         // Execuções de códigos externos
@@ -68,17 +69,26 @@ public class Player : MonoBehaviour
         transform.Translate(movimento * Time.deltaTime);
     }
 
-    IEnumerator Dash(int direcao)
+    IEnumerator Dash()
     {
-        podeMovimentar = false;
+        jogadorRB.velocity = direcaoDash() * (velocidade * velocidaDoDash);
+        armaRB.velocity = direcaoDash() * (velocidade * velocidaDoDash);
 
-        jogadorRB.velocity = transform.right * (velocidade * velocidaDoDash * direcao);
         yield return new WaitForSeconds(tempoDoDash);
 
         jogadorRB.velocity = Vector3.zero;
+        armaRB.velocity = Vector3.zero;
 
         energia -= stamina / 2; if (energia < 0) energia = 0;
-        podeMovimentar = true;
+    }
+
+    Vector3 direcaoDash()
+    {
+        if (Input.GetKey(KeyCode.W)) return transform.up;
+        if (Input.GetKey(KeyCode.S)) return -transform.up;
+        if (Input.GetKey(KeyCode.A)) return transform.right;
+        if (Input.GetKey(KeyCode.D)) return -transform.right;
+        return Vector3.zero;
     }
 
     float ContagemRegressiva(float tempo)
@@ -92,24 +102,18 @@ public class Player : MonoBehaviour
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
+        if (!Physics.Raycast(cameraRay, out hitInfo, cameraRayLength)) return;
+        if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player")) return;
 
-        if (Physics.Raycast(cameraRay, out hitInfo, cameraRayLength))
-        {
-            // Verifica se o objeto atingido está na camada do jogador
-            if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
-            {
-                return;
-            }
+        Vector3 playerToMouse = hitInfo.point - transform.position;
+        playerToMouse.z = 0;
 
-            Vector3 playerToMouse = hitInfo.point - transform.position;
-            playerToMouse.z = 0;
+        // Calcula o ângulo de rotação necessário para que o lado do personagem siga o mouse
+        float angulo = Mathf.Atan2(playerToMouse.y, playerToMouse.x) * Mathf.Rad2Deg - 90f;  // Subtrai 90 graus para alinhar a frente com mouse
 
-            // Calcula o ângulo de rotação necessário para que o lado do personagem siga o mouse
-            float angulo = Mathf.Atan2(playerToMouse.y, playerToMouse.x) * Mathf.Rad2Deg - 90f;  // Subtrai 90 graus para alinhar a frente com mouse
+        Quaternion novaRotacao = Quaternion.Euler(new Vector3(0, 0, angulo));
+        armaRB.MoveRotation(novaRotacao);
 
-            Quaternion novaRotacao = Quaternion.Euler(new Vector3(0, 0, angulo));
-            armaRB.MoveRotation(novaRotacao);
-        }
     }
 
 }
