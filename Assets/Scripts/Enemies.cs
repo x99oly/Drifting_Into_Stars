@@ -21,6 +21,8 @@ public abstract class Enemys : MonoBehaviour
         intervalo = cadenciaDeDisparos;
         
         inimigoRB = GetComponent<Rigidbody>();
+
+        jogador = GameObject.FindWithTag("Player");
     }
 
     protected virtual void Update()
@@ -32,8 +34,9 @@ public abstract class Enemys : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        MesmoZDoJogador();
         VirarParaJogador();
-        Mover();
+        if(podeMovimentar) Mover();
 
         intervalo -= Time.deltaTime;
         if(intervalo < 0)
@@ -73,9 +76,11 @@ public abstract class Enemys : MonoBehaviour
         inimigoRB.MoveRotation(novaRotacao);
     }
 
-    public void DroparInimigo()
+   protected void MesmoZDoJogador()
     {
+        Vector3 escalaDoJogador = jogador.transform.position;
 
+        transform.position = new Vector3(transform.position.x, transform.position.y, escalaDoJogador.z);
     }
-    
+
 }

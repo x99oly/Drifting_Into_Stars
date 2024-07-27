@@ -6,15 +6,35 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject[] inimigos = new GameObject[3];
+    public GameObject jogador;
+    public float intervaloDeDrops = 2f;
+    public int quantidadeMaxDeInimigos = 10;
+
+    public bool podeDroparMainInimigos = true;
+    float intervaloAtualDeDrops = 20;
+
+    int quantidadeAtualDeInimigos = 0;
     void Start()
     {
-        
+        intervaloAtualDeDrops = intervaloDeDrops;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if (podeDroparMainInimigos) StartCoroutine(DroparInimigos());
+        if (podeDroparMainInimigos) intervaloAtualDeDrops -= Time.deltaTime;
+        if (intervaloAtualDeDrops <= 0)
+        {
+            int indexInimigo = Random.Range(0, inimigos.Length);
+            float coordenadaX = Random.Range(0, 10) / 100;
+            float coordenadaY = Random.Range(0, 10) / 100;
+
+            DroparInimigo(indexInimigo, coordenadaX, coordenadaY);
+            intervaloAtualDeDrops = intervaloDeDrops;
+        }
+
     }
 
     public static void ManterNaTela(GameObject personagem)
@@ -115,4 +135,34 @@ public class GameManager : MonoBehaviour
         return resistenciaDeVeneno <= 0; // == if (resistenciaDeVeneno <= 0) return true; return false;
 
     }
+
+    public IEnumerator DroparInimigos()
+    {
+        int indexInimigo = Random.Range(0, inimigos.Length);
+        float coordenadaX = Random.Range(0, 10) / 100;
+        float coordenadaY = Random.Range(0, 10) / 100;
+
+        if (quantidadeAtualDeInimigos != quantidadeMaxDeInimigos)
+        {
+            Vector3 posicaoDeDrop = Camera.main.ViewportToWorldPoint(new Vector3(coordenadaY, coordenadaX, 1));
+
+            GameObject inimigoInstanciado = Instantiate(inimigos[indexInimigo], posicaoDeDrop, Quaternion.identity);
+            quantidadeAtualDeInimigos++;
+            Debug.Log(quantidadeAtualDeInimigos + " + " + quantidadeMaxDeInimigos);
+        }
+        yield return new WaitForSeconds(intervaloDeDrops);
+    }
+
+    public void DroparInimigo(int indexInimigo, float coordenadaX, float coordenadaY)
+    {
+
+        Vector3 posicaoDeDrop = Camera.main.ViewportToWorldPoint(new Vector3(coordenadaY, coordenadaX, 100));
+
+        GameObject inimigoInstanciado = Instantiate(inimigos[indexInimigo], posicaoDeDrop, Quaternion.identity);
+        quantidadeAtualDeInimigos++;
+        Debug.Log(quantidadeAtualDeInimigos + " + " + quantidadeMaxDeInimigos);
+
+    }
+
+
 }
