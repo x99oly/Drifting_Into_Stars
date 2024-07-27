@@ -5,25 +5,40 @@ using UnityEngine;
 
 public abstract class Enemys : MonoBehaviour
 {
-    //Definidas na Unity
-    public float vida = 30f, velocidade = 10.0f, danoDoDisparo = 5f, cadenciaDeDisparos = 10.0f;
-    public GameObject projetil, arma, jogador;
+    // Definidas na Unity
+    public float vida = 30f;
+    public float velocidade = 10.0f;
+    public float danoDoDisparo = 5f;
+    public float cadenciaDeDisparos = 10.0f;
+    public float resistenciaVeneno = 10f;
 
-    //Definidas em código
-    Rigidbody inimigoRB;
-    float vidaAtual, dano, intervalo;
-    bool podeMovimentar = true;
+    public GameObject projetil;
+    public GameObject arma;
+    public GameObject jogador;
+
+    // Definidas em código
+    protected Rigidbody inimigoRB;
+    protected float vidaAtual;
+    protected float dano;
+    protected float intervalo;
+
+    protected bool podeMovimentar = true;
+    protected bool estaEnvenenado = false;
 
     protected virtual void Awake()
     {
+        // Inicialização das variáveis
         vidaAtual = vida;
         dano = danoDoDisparo;
         intervalo = cadenciaDeDisparos;
-        
+
         inimigoRB = GetComponent<Rigidbody>();
 
+        // Atribui o jogador encontrado com a tag "Player"
         jogador = GameObject.FindWithTag("Player");
     }
+
+
 
     protected virtual void Update()
     {
@@ -45,7 +60,6 @@ public abstract class Enemys : MonoBehaviour
             intervalo = cadenciaDeDisparos;
         }
     }
-
     protected virtual void Mover()
     {
 

@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (podeDroparMainInimigos) StartCoroutine(DroparInimigos());
         if (podeDroparMainInimigos) intervaloAtualDeDrops -= Time.deltaTime;
         if (intervaloAtualDeDrops <= 0)
         {
@@ -90,7 +89,6 @@ public class GameManager : MonoBehaviour
             Destroy(personagem);
         }
     }
-
     public static void Atirar(GameObject atirador, GameObject tiroDroper, GameObject municao)
     {
         float velocidadeDoDisparo = 100.0f;
@@ -99,11 +97,17 @@ public class GameManager : MonoBehaviour
 
         // Jogador e inimigo compartilham mesma munição, mas jogador não pode dar dano em sí mesmo
 
-        if (atirador.CompareTag("Player")) tiroInstanciado.name += " Jogador";
+        if (atirador.CompareTag("Player"))
+        {
+            Material corDoTiroDoJogador = Resources.Load<Material>("Assets/Materials/colors/PlayerBullet.mat");
+            Renderer tiroRender = tiroInstanciado.GetComponent<Renderer>();
+            tiroRender.material = corDoTiroDoJogador;
+
+            tiroInstanciado.name += " Jogador";
+        }
 
         tiroInstanciado.GetComponent<Rigidbody>().velocity = tiroDroper.transform.up * velocidadeDoDisparo;
     }
-
     public static float LevarDano(GameObject quemLevouDano, GameObject tiro, ref float velocidade, ref float resistenciaDeVeneno, ref bool envenenado)
     {
         // Impede auto infligir de dano
@@ -119,13 +123,11 @@ public class GameManager : MonoBehaviour
 
         return shot.dano;
     }
-
     public static float CalcularReducaoDeVelocidade(float velocidadeDoObjeto)
     {
         float velocidade = velocidadeDoObjeto / 10;
         return velocidade;
     }
-
     public static bool VerificarSeEstaEnvenenado(ref float resistenciaDeVeneno)
     {
         // out requer que inicialize no método por isso não funcionava aqui
@@ -135,24 +137,6 @@ public class GameManager : MonoBehaviour
         return resistenciaDeVeneno <= 0; // == if (resistenciaDeVeneno <= 0) return true; return false;
 
     }
-
-    public IEnumerator DroparInimigos()
-    {
-        int indexInimigo = Random.Range(0, inimigos.Length);
-        float coordenadaX = Random.Range(0, 10) / 100;
-        float coordenadaY = Random.Range(0, 10) / 100;
-
-        if (quantidadeAtualDeInimigos != quantidadeMaxDeInimigos)
-        {
-            Vector3 posicaoDeDrop = Camera.main.ViewportToWorldPoint(new Vector3(coordenadaY, coordenadaX, 1));
-
-            GameObject inimigoInstanciado = Instantiate(inimigos[indexInimigo], posicaoDeDrop, Quaternion.identity);
-            quantidadeAtualDeInimigos++;
-            Debug.Log(quantidadeAtualDeInimigos + " + " + quantidadeMaxDeInimigos);
-        }
-        yield return new WaitForSeconds(intervaloDeDrops);
-    }
-
     public void DroparInimigo(int indexInimigo, float coordenadaX, float coordenadaY)
     {
 
@@ -160,9 +144,7 @@ public class GameManager : MonoBehaviour
 
         GameObject inimigoInstanciado = Instantiate(inimigos[indexInimigo], posicaoDeDrop, Quaternion.identity);
         quantidadeAtualDeInimigos++;
-        Debug.Log(quantidadeAtualDeInimigos + " + " + quantidadeMaxDeInimigos);
 
     }
-
 
 }
